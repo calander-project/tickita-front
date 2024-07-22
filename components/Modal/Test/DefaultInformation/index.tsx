@@ -1,7 +1,15 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import classNames from "classnames/bind";
+import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { participantScheduleCheck } from "@/apis/apis";
+import { useGetGroupInfo } from "@/hooks/useGetGroupInfo";
+import { useGetGroupList } from "@/hooks/useGetGroupList";
+import { useModalStore } from "@/store/useModalStore";
 
 import { CoordinateScheduleDefaultInformationType, StepViewType } from "@/types/type";
 
@@ -16,6 +24,16 @@ import StepView from "../Components/StepView";
 import SubTitle from "../Components/SubTitle";
 
 const cn = classNames.bind(styles);
+
+const formSchema = z
+  .object({
+    title: z.string().min(1),
+    place: z.string().optional(),
+    content: z.string().optional(),
+    crewId: z.number().positive(),
+    accountIds: z.array(z.number()).nonempty(),
+  })
+  .partial();
 
 interface DefaultInformationProps {
   step: StepViewType;
@@ -32,17 +50,27 @@ function DefaultInformation({ step, setStep }: DefaultInformationProps) {
     formState: { isValid },
   } = useForm<CoordinateScheduleDefaultInformationType>({
     mode: "all",
-    defaultValues: {
-      title: "",
-      place: "",
-      content: "",
-      crewId: 0,
-      accountIds: [],
-    },
+    resolver: zodResolver(formSchema),
   });
+  const { closeModal } = useModalStore();
 
-  const onSubmit = (data: CoordinateScheduleDefaultInformationType) => {
-    console.log(data);
+  const crewIdField = watch("crewId");
+
+  const { data: groupList } = useGetGroupList();
+  const { data: groupMemberList } = useGetGroupInfo(crewIdField);
+
+  const handleModalCloseButtonClick = () => {
+    closeModal();
+  };
+
+  const onSubmit = async (data: CoordinateScheduleDefaultInformationType) => {
+    const participantIdQuery = data.accountIds.map((id) => `participantId=${id}`).join("&");
+    const selectedDatesQuery = selectedDate
+      .map((date) => `selectedDates=${dayjs(date).format("YYYY-MM-DD")}`)
+      .join("&");
+
+    const participantTimes = await participantScheduleCheck(participantIdQuery, selectedDatesQuery);
+    console.log(participantTimes);
   };
 
   return (
@@ -55,12 +83,19 @@ function DefaultInformation({ step, setStep }: DefaultInformationProps) {
         <Title {...register("title")} />
         <Place {...register("place")} />
         <Description {...register("content")} watch={watch} />
-        <Group groupList={[]} setValue={setValue} />
-        <Participant setValue={setValue} participantList={[]} />
+        <Group groupList={groupList ?? []} setValue={setValue} />
+        <Participant setValue={setValue} participantList={groupMemberList?.crewMembers ?? []} />
         <Date selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         <div className={cn("footer")}>
-          <button className={cn("closeButton")}>취소</button>
-          <button className={cn("submitButton")}>다음</button>
+          <button className={cn("closeButton")} onClick={handleModalCloseButtonClick}>
+            취소
+          </button>
+          <button
+            className={cn("submitButton")}
+            disabled={!isValid || Boolean(!selectedDate.length)}
+          >
+            다음
+          </button>
         </div>
       </form>
     </div>

@@ -4,6 +4,7 @@ export const generateCalendar = (year: number, month: number) => {
   const currentDate = dayjs(`${year}-${month + 1}-01`);
   const firstDayOfMonth = currentDate.day();
   const daysInMonth = currentDate.daysInMonth();
+  const today = dayjs();
 
   const prevMonth = dayjs(currentDate).subtract(1, "month");
   const prevMonthDaysCount = prevMonth.daysInMonth();
@@ -15,14 +16,17 @@ export const generateCalendar = (year: number, month: number) => {
     days.push({
       date: prevMonthDaysCount - i,
       currentMonth: false,
+      passDate: true,
     });
   }
 
   // 현재 달의 날짜들 추가
   for (let i = 1; i <= daysInMonth; i++) {
+    const currentDay = dayjs(`${year}-${month + 1}-${i}`);
     days.push({
       date: i,
       currentMonth: true,
+      passDate: currentDay.isBefore(today, "day"),
     });
   }
 
@@ -32,6 +36,7 @@ export const generateCalendar = (year: number, month: number) => {
     days.push({
       date: i,
       currentMonth: false,
+      passDate: false,
     });
   }
 

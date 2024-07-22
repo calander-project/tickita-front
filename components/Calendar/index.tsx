@@ -63,6 +63,7 @@ function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
         {days.map((day, index) => {
           const isFullSelectCount = selectedDate.length >= 3; // 날짜를 3개 이상 클릭
           const isCurrentMonthSelected = !day.currentMonth; // 이번달이 아닌 경우
+          const isPassedDate = day.passDate; // 이미 지난 날짜
           const targetDate = `${dayjs(currentDate).format("YYYY-MM")}-${String(day.date).padStart(2, "0")}`;
           const isStartDateWithTargetDate31DaysDiff = isTargetNumberWithin31Days(
             selectedDate[0],
@@ -77,7 +78,8 @@ function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
             isFullSelectCount ||
             isCurrentMonthSelected ||
             isStartDateWithTargetDate31DaysDiff ||
-            isDateChecked;
+            isDateChecked ||
+            isPassedDate;
 
           return (
             <li key={index}>

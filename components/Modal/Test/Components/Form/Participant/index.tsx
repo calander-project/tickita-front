@@ -3,6 +3,8 @@ import { useState } from "react";
 import classNames from "classnames/bind";
 import { UseFormSetValue } from "react-hook-form";
 
+import { useGetUserInfo } from "@/hooks/useGetUserInfo";
+
 import { CoordinateScheduleDefaultInformationType, GroupMemberInfoType } from "@/types/type";
 
 import styles from "./Participant.module.scss";
@@ -17,6 +19,10 @@ interface ParticipantProps {
 
 function Participant({ setValue, participantList }: ParticipantProps) {
   const [selectedList, setSelectedList] = useState<number[]>([]);
+
+  const { data: userInfo } = useGetUserInfo();
+
+  const memberList = participantList.filter((info) => userInfo?.accountId !== info.accountId);
 
   const handleParticipantSelect = (id: number, isSelected: boolean) => {
     if (isSelected) {
@@ -39,8 +45,8 @@ function Participant({ setValue, participantList }: ParticipantProps) {
     <div className={cn("box")}>
       <Label htmlFor="" text="참석자 선택" />
       <ul className={cn("list")}>
-        {Boolean(participantList.length) ? (
-          participantList.map((info) => {
+        {Boolean(memberList.length) ? (
+          memberList.map((info) => {
             const isSelected = selectedList.includes(info.accountId);
             return (
               <li key={info.accountId}>

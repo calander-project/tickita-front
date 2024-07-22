@@ -175,3 +175,11 @@ export const deleteSchedule = async (scheduleId: number): Promise<DeleteSchedule
   const res = await instance.delete(`/schedule/${scheduleId}`);
   return res.data;
 };
+
+export const participantScheduleCheck = async (
+  participantIdQuery: string,
+  selectedDatesQuery: string,
+) => {
+  const res = await instance.get(`/vote/participant?${participantIdQuery}&${selectedDatesQuery}`);
+  return res.data;
+};
