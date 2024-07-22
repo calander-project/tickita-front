@@ -1,0 +1,21 @@
+.stepList {
+  display: flex;
+  width: auto;
+}
+
+.step {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  color: $gray600;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.currentStep {
+  background-color: $blue500;
+  color: $white;
+}

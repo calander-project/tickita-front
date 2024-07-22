@@ -8,11 +8,11 @@ import { MODAL_TYPE } from "@/constants/modalType";
 import { useGetGroupList } from "@/hooks/useGetGroupList";
 import { useModalStore } from "@/store/useModalStore";
 
-import styles from "./GroupList.module.scss";
+import styles from "./SideBar.module.scss";
 
 const cn = classNames.bind(styles);
 
-export default function GroupList() {
+export default function SideBar() {
   const { query } = useRouter();
   const { data: groupList } = useGetGroupList();
   const { openModal } = useModalStore();

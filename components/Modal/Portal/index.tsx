@@ -15,12 +15,13 @@ import ExitGroupModal from "../ExitGroup";
 import ExportMemberModal from "../ExportMember";
 import ScheduleCreateModal from "../Schedule/ScheduleCreate";
 import ScheduleDetailModal from "../Schedule/ScheduleDetail";
+import Test from "../Test";
 
 const cn = classNames.bind(styles);
 
 const MODAL_COMPONENTS: Record<ModalType, JSX.Element> = {
   [MODAL_TYPE.CREATE_GROUP]: <CreateGroupModal />,
-  [MODAL_TYPE.SCHEDULE_COORDINATION]: <CoordinationModal />, // 타입때문에 임시로 ScheduleDetailModal 사용, 추후 변경 필요
+  [MODAL_TYPE.SCHEDULE_COORDINATION]: <Test />, // 타입때문에 임시로 ScheduleDetailModal 사용, 추후 변경 필요
   [MODAL_TYPE.SCHEDULE_DETAILS]: <ScheduleDetailModal />, // 타입때문에 임시로 ScheduleDetailModal 사용, 추후 변경 필요
   [MODAL_TYPE.SCHEDULE_CREATE]: <ScheduleCreateModal />, // 타입때문에 임시로 ScheduleDetailModal 사용, 추후 변경 필요
   [MODAL_TYPE.SCHEDULE_EDIT]: <ScheduleDetailModal />, // 타입때문에 임시로 ScheduleDetailModal 사용, 추후 변경 필요

@@ -1,0 +1,19 @@
+.label {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  padding-left: 0.25rem;
+  min-width: 2.5rem;
+}
+
+.hiddenLabel {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}

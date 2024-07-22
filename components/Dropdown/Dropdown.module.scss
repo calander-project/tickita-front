@@ -1,0 +1,46 @@
+@keyframes dropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.box {
+  position: relative;
+
+  .button {
+    display: flex;
+    border-radius: 0.5rem;
+    width: 100%;
+    height: 3.125rem;
+    border: 1px solid $gray500;
+    padding: 0.75rem 1rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: $black;
+
+    &:disabled {
+      color: $gray700;
+    }
+  }
+
+  .dropdownList {
+    position: absolute;
+    top: 3.25rem;
+    left: 0;
+    width: 100%;
+    border: 1px solid $gray500;
+    border-radius: 0.5rem;
+    background-color: $white;
+    max-height: 11.25rem;
+    overflow-y: auto;
+    animation: dropdown 0.5s ease-in-out;
+    z-index: 999;
+  }
+}

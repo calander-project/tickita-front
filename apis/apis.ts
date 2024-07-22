@@ -1,5 +1,3 @@
-import { promises } from "dns";
-
 import { InviteDataType } from "@/pages/group/[id]/components/InviteForm";
 
 import {

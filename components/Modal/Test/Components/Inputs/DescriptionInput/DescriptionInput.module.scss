@@ -1,0 +1,31 @@
+.container {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-radius: 0.5rem;
+  background-color: $gray100;
+  border: 1px solid $gray200;
+
+  .textArea {
+    font-size: 0.875rem;
+    letter-spacing: -1.5px;
+    color: $gray600;
+    resize: none;
+    border: none;
+    outline: none;
+    background: none;
+  }
+
+  .textCountBox {
+    display: flex;
+    justify-content: right;
+    color: $gray600;
+    font-size: 0.875rem;
+
+    .currentTextCount {
+      color: $black;
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import classNames from "classnames/bind";
 
 import Header from "@/components/Header";
-import GroupList from "@/pages/dashboard/components/GroupList";
+import SideBar from "@/pages/dashboard/components/SideBar";
 
 import styles from "./Layout.module.scss";
 
@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Header />
       <main className={cn("container")}>
         <div className={cn("wrap")}>
-          <GroupList />
+          <SideBar />
           {children}
         </div>
       </main>

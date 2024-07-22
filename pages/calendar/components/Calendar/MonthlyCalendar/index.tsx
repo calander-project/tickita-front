@@ -64,9 +64,6 @@ export default function MonthlyCalendar({ scheduleData }: MonthlyCalendarProps) 
 
   const { draggedIndex, setDraggedIndex } = useDragSelect(dragContainerRef, handleDragEnd);
   const scrollRef = useScroll<HTMLDivElement>(handleScrollDownDebounced, handleScrollUpDebounced);
-  useEffect(() => {
-    console.log(scheduleData);
-  }, []);
 
   return (
     <div className={cn("container")} ref={scrollRef}>

@@ -1,0 +1,55 @@
+.container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    .guide {
+      color: $gray700;
+      font-size: 0.875rem;
+    }
+  }
+
+  .caution {
+    color: $red500;
+    font-size: 0.75rem;
+    margin: 0.5rem 0 0.75rem 0.5rem;
+  }
+
+  .datePicker {
+    display: flex;
+    gap: 1rem;
+
+    .calendar {
+      width: 15rem;
+      height: 16.875rem;
+    }
+
+    .selectedList {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: 1rem;
+
+      .selectedDate {
+        width: 8.3125rem;
+        padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+        display: flex;
+        gap: 0.25rem;
+        align-items: center;
+        border-radius: 62.5rem;
+        border: 1px solid $gray400;
+        background-color: $gray50;
+        font-size: 0.9rem;
+
+        .clear {
+          padding-top: 0.1rem;
+        }
+      }
+    }
+  }
+}
