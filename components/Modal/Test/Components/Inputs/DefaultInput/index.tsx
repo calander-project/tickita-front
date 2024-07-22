@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, forwardRef } from "react";
 
 import classNames from "classnames/bind";
 
@@ -10,8 +10,14 @@ interface DefaultInputProps extends InputHTMLAttributes<HTMLInputElement> {
   fontSize: number;
 }
 
-function DefaultInput({ fontSize, ...restProps }: DefaultInputProps) {
-  return <input style={{ fontSize }} className={cn("input")} type="text" {...restProps} />;
-}
+const DefaultInput = forwardRef<HTMLInputElement, DefaultInputProps>(
+  ({ fontSize, ...restProps }, ref) => {
+    return (
+      <input ref={ref} style={{ fontSize }} className={cn("input")} type="text" {...restProps} />
+    );
+  },
+);
+
+DefaultInput.displayName = "DefaultInput";
 
 export default DefaultInput;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import Image from "next/image";
 
@@ -12,11 +12,17 @@ import Label from "../../Label";
 
 const cn = classNames.bind(styles);
 
-function Date() {
-  const [selectedDate, setSelectedData] = useState<Date[]>([]);
+interface DateProps {
+  selectedDate: Date[];
+  setSelectedDate: Dispatch<SetStateAction<Date[]>>;
+}
 
+function Date({ selectedDate, setSelectedDate }: DateProps) {
   const handleClearDateButtonClick = (date: Date) => {
-    setSelectedData((prev) => prev.filter((prevDate) => prevDate !== date));
+    setSelectedDate((prev) => {
+      const result = prev.filter((prevDate) => prevDate !== date);
+      return result;
+    });
   };
 
   return (
@@ -28,7 +34,7 @@ function Date() {
       <p className={cn("caution")}>⚠️ 시작 날짜로부터 31일 이내의 날짜만 선택 가능합니다.</p>
       <div className={cn("datePicker")}>
         <div className={cn("calendar")}>
-          <Calendar selectedDate={selectedDate} setSelectedData={setSelectedData} />
+          <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         </div>
 
         <ul className={cn("selectedList")}>

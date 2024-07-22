@@ -37,12 +37,13 @@
 
     .empty {
       color: $red500;
-      font-weight: 600;
+      font-weight: 500;
       width: 100%;
       display: flex;
       justify-content: center;
-      height: 2rem;
-      line-height: 2rem;
+      font-size: 0.875rem;
+      height: 1.25rem;
+      line-height: 1.25rem;
     }
   }
 }

@@ -14,10 +14,10 @@ const cn = classNames.bind(styles);
 
 interface CalendarProps {
   selectedDate: Date[];
-  setSelectedData: Dispatch<SetStateAction<Date[]>>;
+  setSelectedDate: Dispatch<SetStateAction<Date[]>>;
 }
 
-function Calendar({ selectedDate, setSelectedData }: CalendarProps) {
+function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const days = generateCalendar(dayjs(currentDate).year(), dayjs(currentDate).month());
@@ -31,7 +31,7 @@ function Calendar({ selectedDate, setSelectedData }: CalendarProps) {
   };
 
   const test = (day: number) => {
-    setSelectedData((prev) =>
+    setSelectedDate((prev) =>
       [...prev, new Date(`${dayjs(currentDate).format("YYYY-MM")} ${day}`)].sort(
         (a, b) => a.getTime() - b.getTime(),
       ),

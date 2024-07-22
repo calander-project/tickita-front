@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 import classNames from "classnames/bind";
+import { UseFormSetValue } from "react-hook-form";
 
-import { GroupMemberInfoType } from "@/types/type";
+import { CoordinateScheduleDefaultInformationType, GroupMemberInfoType } from "@/types/type";
 
 import styles from "./Participant.module.scss";
 import Label from "../../Label";
@@ -11,18 +12,27 @@ const cn = classNames.bind(styles);
 
 interface ParticipantProps {
   participantList: GroupMemberInfoType[];
+  setValue: UseFormSetValue<CoordinateScheduleDefaultInformationType>;
 }
 
-function Participant({ participantList }: ParticipantProps) {
+function Participant({ setValue, participantList }: ParticipantProps) {
   const [selectedList, setSelectedList] = useState<number[]>([]);
 
   const handleParticipantSelect = (id: number, isSelected: boolean) => {
     if (isSelected) {
-      setSelectedList((prev) => prev.filter((prevNum) => prevNum !== id));
+      setSelectedList((prev) => {
+        const result = prev.filter((prevNum) => prevNum !== id);
+        setValue("accountIds", result);
+        return result;
+      });
       return;
     }
 
-    setSelectedList((prev) => [...prev, id]);
+    setSelectedList((prev) => {
+      const result = [...prev, id];
+      setValue("accountIds", result);
+      return result;
+    });
   };
 
   return (
@@ -45,7 +55,7 @@ function Participant({ participantList }: ParticipantProps) {
             );
           })
         ) : (
-          <li className={cn("empty")}>그룹에 멤버가 존재하지 않습니다.</li>
+          <li className={cn("empty")}>⛔️ 그룹에 멤버가 존재하지 않습니다.</li>
         )}
       </ul>
     </div>

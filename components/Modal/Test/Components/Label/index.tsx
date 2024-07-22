@@ -7,7 +7,7 @@ const cn = classNames.bind(styles);
 interface LabelProps {
   isHidden?: boolean;
   text: string;
-  htmlFor: string;
+  htmlFor?: string;
 }
 
 function Label({ text, htmlFor, isHidden = false }: LabelProps) {

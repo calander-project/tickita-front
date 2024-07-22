@@ -3,10 +3,11 @@ import { useState, RefObject } from "react";
 import Image from "next/image";
 
 import classNames from "classnames/bind";
+import { UseFormSetValue } from "react-hook-form";
 
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
-import { CrewInfo, GroupColorType } from "@/types/type";
+import { CoordinateScheduleDefaultInformationType, CrewInfo, GroupColorType } from "@/types/type";
 
 import styles from "./Dropdown.module.scss";
 import ListButton from "./ListButton";
@@ -16,9 +17,10 @@ const cn = classNames.bind(styles);
 
 interface DropdownProps {
   groupList: CrewInfo[];
+  setValue: UseFormSetValue<CoordinateScheduleDefaultInformationType>;
 }
 
-function Dropdown({ groupList }: DropdownProps) {
+function Dropdown({ groupList, setValue }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectGroupInfo, setSelectGroupInfo] = useState<Omit<CrewInfo, "crewId">>({
     crewName: "",
@@ -27,7 +29,8 @@ function Dropdown({ groupList }: DropdownProps) {
 
   const buttonRef = useOutsideClick(() => setIsOpen(false)) as RefObject<HTMLButtonElement>;
 
-  const handleGroupSelect = (crewName: string, labelColor: GroupColorType) => {
+  const handleGroupSelect = (crewId: number, crewName: string, labelColor: GroupColorType) => {
+    setValue("crewId", crewId);
     setSelectGroupInfo({ crewName, labelColor });
   };
 
@@ -58,7 +61,7 @@ function Dropdown({ groupList }: DropdownProps) {
             {groupList?.map((info) => (
               <ListButton
                 key={info.crewId}
-                onClick={() => handleGroupSelect(info.crewName, info.labelColor)}
+                onClick={() => handleGroupSelect(info.crewId, info.crewName, info.labelColor)}
                 crewName={info.crewName}
                 labelColor={info.labelColor}
               />
