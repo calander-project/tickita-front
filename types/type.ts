@@ -203,8 +203,8 @@ export interface VoteDataType {
 export interface CoordinateScheduleDefaultInformationType {
   crewId: number;
   title: string;
-  content: string;
-  place: string;
+  content?: string;
+  place?: string;
   accountIds: number[];
 }
 

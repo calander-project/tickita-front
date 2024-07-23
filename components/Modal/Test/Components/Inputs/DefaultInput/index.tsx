@@ -1,23 +1,29 @@
-import { InputHTMLAttributes, forwardRef } from "react";
+import { InputHTMLAttributes } from "react";
 
 import classNames from "classnames/bind";
+import { useFormContext } from "react-hook-form";
 
 import styles from "./DefaultInput.module.scss";
 
 const cn = classNames.bind(styles);
 
 interface DefaultInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  fieldName: string;
   fontSize: number;
 }
 
-const DefaultInput = forwardRef<HTMLInputElement, DefaultInputProps>(
-  ({ fontSize, ...restProps }, ref) => {
-    return (
-      <input ref={ref} style={{ fontSize }} className={cn("input")} type="text" {...restProps} />
-    );
-  },
-);
+function DefaultInput({ fieldName, fontSize, ...restProps }: DefaultInputProps) {
+  const { register } = useFormContext();
 
-DefaultInput.displayName = "DefaultInput";
+  return (
+    <input
+      style={{ fontSize }}
+      className={cn("input")}
+      type="text"
+      {...restProps}
+      {...register(fieldName)}
+    />
+  );
+}
 
 export default DefaultInput;

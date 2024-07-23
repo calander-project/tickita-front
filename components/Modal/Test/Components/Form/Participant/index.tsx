@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 import classNames from "classnames/bind";
-import { UseFormSetValue } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 
-import { CoordinateScheduleDefaultInformationType, GroupMemberInfoType } from "@/types/type";
+import { GroupMemberInfoType } from "@/types/type";
 
 import styles from "./Participant.module.scss";
 import Label from "../../Label";
@@ -14,11 +14,12 @@ const cn = classNames.bind(styles);
 
 interface ParticipantProps {
   participantList: GroupMemberInfoType[];
-  setValue: UseFormSetValue<CoordinateScheduleDefaultInformationType>;
 }
 
-function Participant({ setValue, participantList }: ParticipantProps) {
+function Participant({ participantList }: ParticipantProps) {
   const [selectedList, setSelectedList] = useState<number[]>([]);
+
+  const { setValue } = useFormContext();
 
   const { data: userInfo } = useGetUserInfo();
 

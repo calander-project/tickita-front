@@ -1,4 +1,6 @@
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+
+import { VoteDateListType } from "@/components/Modal/Test/SelectDate";
 
 /**
  * 월간 캘린더에 들어갈 날짜를 42일 기준으로 계산
@@ -59,4 +61,31 @@ export const divideWeek = (calendarTags: JSX.Element[]) => {
     }
     return acc;
   }, []);
+};
+
+const isBetween = (time: Dayjs, start: Dayjs, end: Dayjs) => {
+  return dayjs(time).isAfter(dayjs(start), "minute") && dayjs(time).isBefore(dayjs(end), "minute");
+};
+
+export const isVoteTimeInRange = (
+  selectedDateList: VoteDateListType[],
+  targetDate: string,
+  targetTime: string,
+) => {
+  for (let i = 0; i < selectedDateList.length; i++) {
+    const { voteDate, voteStartTime, voteEndTime } = selectedDateList[i];
+    if (voteDate !== targetDate) {
+      continue;
+    }
+
+    const startTime = dayjs(voteStartTime, "HH:mm");
+    const endTime = dayjs(voteEndTime, "HH:mm");
+    const checkTime = dayjs(targetTime, "HH:mm");
+
+    if (isBetween(checkTime, startTime, endTime)) {
+      return true;
+    }
+  }
+
+  return false;
 };

@@ -3,11 +3,11 @@ import { useState, RefObject } from "react";
 import Image from "next/image";
 
 import classNames from "classnames/bind";
-import { UseFormSetValue } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
-import { CoordinateScheduleDefaultInformationType, CrewInfo, GroupColorType } from "@/types/type";
+import { CrewInfo, GroupColorType } from "@/types/type";
 
 import styles from "./Dropdown.module.scss";
 import ListButton from "./ListButton";
@@ -17,15 +17,16 @@ const cn = classNames.bind(styles);
 
 interface DropdownProps {
   groupList: CrewInfo[];
-  setValue: UseFormSetValue<CoordinateScheduleDefaultInformationType>;
 }
 
-function Dropdown({ groupList, setValue }: DropdownProps) {
+function Dropdown({ groupList }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectGroupInfo, setSelectGroupInfo] = useState<Omit<CrewInfo, "crewId">>({
     crewName: "",
     labelColor: "" as GroupColorType,
   });
+
+  const { setValue } = useFormContext();
 
   const buttonRef = useOutsideClick(() => setIsOpen(false)) as RefObject<HTMLButtonElement>;
 
