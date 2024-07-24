@@ -113,7 +113,7 @@ instance.interceptors.response.use(
         // access token 재발급
         const refreshResponse = await instance.post("/token/refresh", { refresh: REFRESH_TOKEN });
         const { accessToken, refreshToken, refreshTokenExpireAt } = refreshResponse.data;
-        console.log(accessToken);
+
         // cookie에 새로 발급받은 token 저장
         await nextInstance.post("/api/setCookies", {
           accessToken,
