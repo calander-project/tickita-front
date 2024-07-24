@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 
 import { participantTimesType } from "@/components/Modal/CoordinationSchedule";
-import { VoteDateListType } from "@/components/Modal/Test/SelectDate";
+import { VoteDateListType } from "@/components/Modal/CoordinationSchedule/Components/SelectDate";
 
 dayjs.extend(isBetween);
 

@@ -1,6 +1,6 @@
 import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
 
-import { VoteDateListType } from "@/components/Modal/Test/SelectDate";
+import { VoteDateListType } from "@/components/Modal/CoordinationSchedule/Components/SelectDate";
 import { compareTimestamps } from "@/utils/calculateCalendarDates";
 
 import useToast from "./useToast";
