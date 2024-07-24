@@ -10,8 +10,8 @@ import useVoteDateDrag from "@/hooks/useVoteDateDrag";
 import { isImpossibleTimeInRange, isVoteTimeInRange } from "@/utils/calculateCalendarDates";
 
 import styles from "./ScheduleDatePicker.module.scss";
-import { participantTimesType } from "../Modal/Test";
-import { VoteDateListType } from "../Modal/Test/Components/SelectDate";
+import { participantTimesType } from "../Modal/CoordinationSchedule";
+import { VoteDateListType } from "../Modal/CoordinationSchedule/Components/SelectDate";
 
 const cn = classNames.bind(styles);
 

@@ -11,7 +11,7 @@ import { useGetGroupInfo } from "@/hooks/useGetGroupInfo";
 import { useGetGroupList } from "@/hooks/useGetGroupList";
 import { useModalStore } from "@/store/useModalStore";
 
-import { CoordinateScheduleDefaultInformationType, StepViewType } from "@/types/type";
+import { CoordinationScheduleDefaultInformationType, StepViewType } from "@/types/type";
 
 import styles from "./DefaultInformation.module.scss";
 import { CreateVoteDataType } from "../..";
@@ -48,7 +48,7 @@ function DefaultInformation({
   setCreateVoteData,
 }: DefaultInformationProps) {
   const [selectedDate, setSelectedDate] = useState<string[]>(createVoteData.selectedDateList);
-  const methods = useForm<CoordinateScheduleDefaultInformationType>({
+  const methods = useForm<CoordinationScheduleDefaultInformationType>({
     mode: "all",
     resolver: zodResolver(formSchema),
   });
@@ -76,7 +76,7 @@ function DefaultInformation({
     closeModal();
   };
 
-  const onSubmit = async (data: CoordinateScheduleDefaultInformationType) => {
+  const onSubmit = async (data: CoordinationScheduleDefaultInformationType) => {
     const participantIdQuery = data.accountIds.map((id) => `participantId=${id}`).join("&");
     const selectedDatesQuery = selectedDate.map((date) => `selectedDates=${date}`).join("&");
 

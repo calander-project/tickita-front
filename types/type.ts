@@ -200,7 +200,7 @@ export interface VoteDataType {
   accountIds: number[];
 }
 
-export interface CoordinateScheduleDefaultInformationType {
+export interface CoordinationScheduleDefaultInformationType {
   crewId: number;
   title: string;
   content: string;
@@ -208,7 +208,7 @@ export interface CoordinateScheduleDefaultInformationType {
   accountIds: number[];
 }
 
-export interface CoordinateScheduleDtoType extends CoordinateScheduleDefaultInformationType {
+export interface CoordinationScheduleDtoType extends CoordinationScheduleDefaultInformationType {
   voteDateLists: VoteDate[];
   endTime: string;
   endDate: string;

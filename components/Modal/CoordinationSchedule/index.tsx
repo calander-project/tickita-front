@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { CoordinateScheduleDefaultInformationType, StepViewType } from "types/type";
+import { CoordinationScheduleDefaultInformationType, StepViewType } from "types/type";
 
 import DefaultInformation from "./Components/DefaultInformation";
 import SelectDate from "./Components/SelectDate";
@@ -11,12 +11,12 @@ export interface participantTimesType {
   haveEndDateTime: string;
 }
 
-export interface CreateVoteDataType extends CoordinateScheduleDefaultInformationType {
+export interface CreateVoteDataType extends CoordinationScheduleDefaultInformationType {
   participantTimes: participantTimesType[];
   selectedDateList: string[];
 }
 
-function Test() {
+function CoordinationScheduleModal() {
   const [step, setStep] = useState<StepViewType>({
     maxStep: 2,
     currentStep: 1,
@@ -49,4 +49,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default CoordinationScheduleModal;
