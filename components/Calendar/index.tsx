@@ -13,8 +13,8 @@ import styles from "./Calendar.module.scss";
 const cn = classNames.bind(styles);
 
 interface CalendarProps {
-  selectedDate: Date[];
-  setSelectedDate: Dispatch<SetStateAction<Date[]>>;
+  selectedDate: string[];
+  setSelectedDate: Dispatch<SetStateAction<string[]>>;
 }
 
 function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
@@ -30,10 +30,10 @@ function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
     setCurrentDate(dayjs(currentDate).add(1, "month").toDate());
   };
 
-  const test = (day: number) => {
+  const handleSelectDate = (day: number) => {
     setSelectedDate((prev) =>
-      [...prev, new Date(`${dayjs(currentDate).format("YYYY-MM")} ${day}`)].sort(
-        (a, b) => a.getTime() - b.getTime(),
+      [...prev, `${dayjs(currentDate).format("YYYY-MM")}-${day}`].sort(
+        (a, b) => new Date(a).getTime() - new Date(b).getTime(),
       ),
     );
   };
@@ -70,9 +70,7 @@ function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
             new Date(targetDate),
           ); // 시작 날짜랑 31일 이상 차이 나면 true
 
-          const isDateChecked = selectedDate
-            .map((date) => dayjs(date).format("YYYY-MM-DD"))
-            .includes(targetDate);
+          const isDateChecked = selectedDate.includes(targetDate);
 
           const isButtonDisable =
             isFullSelectCount ||
@@ -85,7 +83,7 @@ function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
             <li key={index}>
               <button
                 type="button"
-                onClick={() => test(day.date)}
+                onClick={() => handleSelectDate(day.date)}
                 className={cn("dateButton")}
                 disabled={isButtonDisable}
               >

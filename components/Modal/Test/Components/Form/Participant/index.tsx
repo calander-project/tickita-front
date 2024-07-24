@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import classNames from "classnames/bind";
 import { useFormContext } from "react-hook-form";
@@ -19,9 +19,11 @@ interface ParticipantProps {
 function Participant({ participantList }: ParticipantProps) {
   const [selectedList, setSelectedList] = useState<number[]>([]);
 
-  const { setValue } = useFormContext();
+  const { setValue, watch } = useFormContext();
 
   const { data: userInfo } = useGetUserInfo();
+
+  const accountIdField = watch("accountIds") ?? [];
 
   const memberList = participantList.filter((info) => userInfo?.accountId !== info.accountId);
 
@@ -41,6 +43,10 @@ function Participant({ participantList }: ParticipantProps) {
       return result;
     });
   };
+
+  useEffect(() => {
+    setSelectedList(accountIdField);
+  }, [accountIdField]);
 
   return (
     <div className={cn("box")}>

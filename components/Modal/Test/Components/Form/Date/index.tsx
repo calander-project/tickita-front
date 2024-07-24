@@ -13,12 +13,12 @@ import Label from "../../Label";
 const cn = classNames.bind(styles);
 
 interface DateProps {
-  selectedDate: Date[];
-  setSelectedDate: Dispatch<SetStateAction<Date[]>>;
+  selectedDate: string[];
+  setSelectedDate: Dispatch<SetStateAction<string[]>>;
 }
 
 function Date({ selectedDate, setSelectedDate }: DateProps) {
-  const handleClearDateButtonClick = (date: Date) => {
+  const handleClearDateButtonClick = (date: string) => {
     setSelectedDate((prev) => {
       const result = prev.filter((prevDate) => prevDate !== date);
       return result;
@@ -39,13 +39,13 @@ function Date({ selectedDate, setSelectedDate }: DateProps) {
 
         <ul className={cn("selectedList")}>
           {selectedDate.map((date) => (
-            <li key={String(date)}>
+            <li key={date}>
               <button
                 type="button"
                 className={cn("selectedDate")}
                 onClick={() => handleClearDateButtonClick(date)}
               >
-                {dayjs(date).format("YYYY-MM-DD")}
+                {date}
                 <Image
                   className={cn("clear")}
                   src="/icons/close-icon.svg"

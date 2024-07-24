@@ -1,4 +1,4 @@
-import { useState, RefObject } from "react";
+import { useState, RefObject, useEffect } from "react";
 
 import Image from "next/image";
 
@@ -26,14 +26,28 @@ function Dropdown({ groupList }: DropdownProps) {
     labelColor: "" as GroupColorType,
   });
 
-  const { setValue } = useFormContext();
+  const { setValue, watch } = useFormContext();
 
   const buttonRef = useOutsideClick(() => setIsOpen(false)) as RefObject<HTMLButtonElement>;
 
-  const handleGroupSelect = (crewId: number, crewName: string, labelColor: GroupColorType) => {
+  const crewIdField = watch("crewId");
+
+  const handleGroupSelect = (crewId: number) => {
     setValue("crewId", crewId);
-    setSelectGroupInfo({ crewName, labelColor });
   };
+
+  useEffect(() => {
+    const result = groupList.find((list) => list.crewId === crewIdField);
+
+    if (!result) {
+      return;
+    }
+
+    setSelectGroupInfo({
+      crewName: result.crewName,
+      labelColor: result.labelColor,
+    });
+  }, [crewIdField]);
 
   return (
     <div>
@@ -47,10 +61,12 @@ function Dropdown({ groupList }: DropdownProps) {
         >
           {Boolean(groupList.length) ? (
             <>
-              <GroupList
-                crewName={selectGroupInfo.crewName}
-                labelColor={selectGroupInfo.labelColor}
-              />
+              {
+                <GroupList
+                  crewName={selectGroupInfo.crewName}
+                  labelColor={selectGroupInfo.labelColor}
+                />
+              }
               <Image src="./icons/dropdown.svg" width={26} height={26} alt="드롭다운 버튼" />
             </>
           ) : (
@@ -62,7 +78,7 @@ function Dropdown({ groupList }: DropdownProps) {
             {groupList?.map((info) => (
               <ListButton
                 key={info.crewId}
-                onClick={() => handleGroupSelect(info.crewId, info.crewName, info.labelColor)}
+                onClick={() => handleGroupSelect(info.crewId)}
                 crewName={info.crewName}
                 labelColor={info.labelColor}
               />

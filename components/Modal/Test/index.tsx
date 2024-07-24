@@ -2,16 +2,18 @@ import { useState } from "react";
 
 import { CoordinateScheduleDefaultInformationType, StepViewType } from "types/type";
 
-import DefaultInformation from "./DefaultInformation";
-import SelectDate from "./SelectDate";
+import DefaultInformation from "./Components/DefaultInformation";
+import SelectDate from "./Components/SelectDate";
+import Success from "./Components/Success";
 
-interface participantTimesType {
+export interface participantTimesType {
   haveStartDateTime: string;
   haveEndDateTime: string;
 }
 
 export interface CreateVoteDataType extends CoordinateScheduleDefaultInformationType {
   participantTimes: participantTimesType[];
+  selectedDateList: string[];
 }
 
 function Test() {
@@ -26,16 +28,23 @@ function Test() {
     place: "",
     accountIds: [],
     participantTimes: [],
+    selectedDateList: [],
   });
 
   return (
     <>
-      {step.currentStep === 2 && (
-        <DefaultInformation step={step} setStep={setStep} setCreateVoteData={setCreateVoteData} />
-      )}
       {step.currentStep === 1 && (
+        <DefaultInformation
+          step={step}
+          setStep={setStep}
+          createVoteData={createVoteData}
+          setCreateVoteData={setCreateVoteData}
+        />
+      )}
+      {step.currentStep === 2 && (
         <SelectDate step={step} setStep={setStep} createVoteData={createVoteData} />
       )}
+      {step.currentStep === 3 && <Success />}
     </>
   );
 }

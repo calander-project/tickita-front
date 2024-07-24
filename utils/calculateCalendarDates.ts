@@ -1,6 +1,10 @@
 import dayjs, { Dayjs } from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 
+import { participantTimesType } from "@/components/Modal/Test";
 import { VoteDateListType } from "@/components/Modal/Test/SelectDate";
+
+dayjs.extend(isBetween);
 
 /**
  * 월간 캘린더에 들어갈 날짜를 42일 기준으로 계산
@@ -63,10 +67,6 @@ export const divideWeek = (calendarTags: JSX.Element[]) => {
   }, []);
 };
 
-const isBetween = (time: Dayjs, start: Dayjs, end: Dayjs) => {
-  return dayjs(time).isAfter(dayjs(start), "minute") && dayjs(time).isBefore(dayjs(end), "minute");
-};
-
 export const isVoteTimeInRange = (
   selectedDateList: VoteDateListType[],
   targetDate: string,
@@ -78,11 +78,49 @@ export const isVoteTimeInRange = (
       continue;
     }
 
-    const startTime = dayjs(voteStartTime, "HH:mm");
-    const endTime = dayjs(voteEndTime, "HH:mm");
-    const checkTime = dayjs(targetTime, "HH:mm");
+    const startTime = dayjs(`2000-01-01 ${voteStartTime}`);
+    const endTime = dayjs(`2000-01-01 ${voteEndTime}`);
+    const checkTime = dayjs(`2000-01-01 ${targetTime}`);
 
-    if (isBetween(checkTime, startTime, endTime)) {
+    if (
+      checkTime.isSame(startTime) ||
+      checkTime.isSame(endTime) ||
+      checkTime.isBetween(startTime, endTime)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+export const compareTimestamps = (firstTime: string, secondTime: string) => {
+  const fistTimeObj = dayjs(`2000-01-01 ${firstTime}`);
+  const secondTimeObj = dayjs(`2000-01-01 ${secondTime}`);
+
+  if (fistTimeObj.isAfter(secondTimeObj)) {
+    return { startTime: secondTime, endTime: firstTime };
+  }
+  return { startTime: firstTime, endTime: secondTime };
+};
+
+export const isImpossibleTimeInRange = (
+  participantTimes: participantTimesType[],
+  targetDate: string,
+  targetTime: string,
+) => {
+  for (let i = 0; i < participantTimes.length; i++) {
+    const { haveStartDateTime, haveEndDateTime } = participantTimes[i];
+
+    const startTime = dayjs(haveStartDateTime);
+    const endTime = dayjs(haveEndDateTime);
+    const checkTime = dayjs(`${targetDate} ${targetTime}`);
+
+    if (
+      checkTime.isSame(startTime) ||
+      checkTime.isSame(endTime) ||
+      checkTime.isBetween(startTime, endTime)
+    ) {
       return true;
     }
   }

@@ -1,4 +1,4 @@
-import { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 
 import Image from "next/image";
 
@@ -6,86 +6,34 @@ import classNames from "classnames/bind";
 import dayjs from "dayjs";
 
 import { HOURS } from "@/constants/calendarConstants";
-import { isVoteTimeInRange } from "@/utils/calculateCalendarDates";
+import useVoteDateDrag from "@/hooks/useVoteDateDrag";
+import { isImpossibleTimeInRange, isVoteTimeInRange } from "@/utils/calculateCalendarDates";
 
 import styles from "./ScheduleDatePicker.module.scss";
-import { VoteDateListType } from "../Modal/Test/SelectDate";
+import { participantTimesType } from "../Modal/Test";
+import { VoteDateListType } from "../Modal/Test/Components/SelectDate";
 
 const cn = classNames.bind(styles);
 
 interface ScheduleDatePickerProps {
-  date: any;
+  date: string;
   selectedDate: VoteDateListType[];
   setSelectedDate: Dispatch<SetStateAction<VoteDateListType[]>>;
+  participantTimes: participantTimesType[];
 }
 
-function ScheduleDatePicker({ date, selectedDate, setSelectedDate }: ScheduleDatePickerProps) {
+function ScheduleDatePicker({
+  date,
+  selectedDate,
+  setSelectedDate,
+  participantTimes,
+}: ScheduleDatePickerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startTime, setStartTime] = useState<string | null>(null);
-  const [endTime, setEndTime] = useState<string | null>(null);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
-  const handleMouseDown = (e: any) => {
-    if (selectedDate.length >= 3) {
-      return;
-    }
-
-    const targetElement = e.target as HTMLElement;
-    const time = targetElement.dataset.time!;
-
-    if (!time) {
-      return;
-    }
-
-    setStartTime(time);
-    setSelectedItems([...selectedItems, time]);
-    setIsDragging(true);
-  };
-
-  const handleMouseMove = (e: any) => {
-    if (!isDragging) {
-      return;
-    }
-
-    const targetElement = e.target as HTMLElement;
-    const time = targetElement.dataset.time!;
-
-    if (!time) {
-      console.log("a");
-      setIsDragging(false);
-      handleMouseUp();
-      return;
-    }
-
-    setEndTime(time);
-    setSelectedItems((prev) => {
-      if (prev.includes(time)) {
-        return prev;
-      }
-
-      return [...prev, time];
-    });
-  };
-
-  const handleMouseUp = () => {
-    if (!isDragging) {
-      return;
-    }
-
-    setSelectedItems([]);
-    setSelectedDate((prev) => [
-      ...prev,
-      {
-        voteDate: date.date,
-        voteStartTime: startTime!,
-        voteEndTime: endTime!,
-      },
-    ]);
-    console.log("Selected time:", startTime, "-", endTime);
-  };
-
-  console.log(selectedItems);
+  const { handleMouseDown, handleMouseMove, handleMouseUp, dragItems } = useVoteDateDrag({
+    date,
+    selectedDate,
+    setSelectedDate,
+  });
 
   const handleCarouselNavigationClick = (option: "next" | "prev") => {
     if (!containerRef.current) {
@@ -132,37 +80,46 @@ function ScheduleDatePicker({ date, selectedDate, setSelectedDate }: ScheduleDat
 
         <ul className={cn("picker")}>
           <div className={cn("date")}>
-            <p>{date.date}</p>
-            <p>{date.day}</p>
+            <p>{date}</p>
+            <p>{dayjs(date).format("dddd")}</p>
           </div>
 
           {HOURS.map((hourNum, idx) => {
             const hour0Min = `${String(hourNum).padStart(2, "0")}:00`;
             const hour30Min = `${String(hourNum).padStart(2, "0")}:30`;
-            const isBetween = isVoteTimeInRange(selectedDate, date.date, hour0Min);
-            console.log(isBetween);
+            const isBetween0Min = isVoteTimeInRange(selectedDate, date, hour0Min);
+            const isBetween30Min = isVoteTimeInRange(selectedDate, date, hour30Min);
+            const isImpossibleTime0Min = isImpossibleTimeInRange(participantTimes, date, hour0Min);
+            const isImpossibleTime30Min = isImpossibleTimeInRange(
+              participantTimes,
+              date,
+              hour30Min,
+            );
 
             return (
               <li key={hourNum} className={cn("hour")}>
                 <p
                   className={cn("item", {
-                    selectedItem: selectedItems.includes(hour0Min),
-                    //   selectedDate.includes(`${String(hourNum).padStart(2, "0")}:00`),
+                    dragItem: dragItems.includes(hour0Min),
+                    selectedItem: isBetween0Min,
+                    impossibleTime: isImpossibleTime0Min,
                   })}
-                  data-time={hour0Min}
+                  data-time={!isImpossibleTime0Min && hour0Min}
                 />
 
                 <p
                   className={cn("item", {
-                    selectedItem: selectedItems.includes(hour30Min),
+                    dragItem: dragItems.includes(hour30Min),
                     lastIdx: idx === HOURS.length - 1,
+                    selectedItem: isBetween30Min,
+                    impossibleTime: isImpossibleTime30Min,
                   })}
-                  data-time={hour30Min}
+                  data-time={!isImpossibleTime30Min && hour30Min}
                 />
               </li>
             );
           })}
-          <div className={cn("gap")} style={{ height: `${date.length * 96}px` }} />
+          <div className={cn("gap")} />
         </ul>
       </div>
     </div>

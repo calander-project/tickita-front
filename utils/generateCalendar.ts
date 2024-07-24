@@ -43,7 +43,7 @@ export const generateCalendar = (year: number, month: number) => {
   return days;
 };
 
-export const isTargetNumberWithin31Days = (startDate: Date, targetDate: Date) => {
+export const isTargetNumberWithin31Days = (startDate: string, targetDate: Date) => {
   if (!startDate) {
     return false;
   }

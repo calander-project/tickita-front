@@ -4,7 +4,7 @@ import path from "path";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],
   sassOptions: {
     // @import 사용 시 styles 폴더를 기본으로 설정

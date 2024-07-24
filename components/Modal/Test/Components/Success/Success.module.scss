@@ -1,0 +1,114 @@
+.container {
+  position: fixed;
+  background-color: $white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40rem;
+  padding: 2.5rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow:
+    0px 2px 8px 0px rgba(0, 0, 0, 0.12),
+    0px 1px 4px 0px rgba(0, 0, 0, 0.08),
+    0px 0px 1px 0px rgba(0, 0, 0, 0.08);
+
+  .wrap {
+    width: 30rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    .header {
+      text-align: center;
+      margin-top: 1rem;
+
+      .title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        padding-bottom: 0.75rem;
+      }
+
+      .subTitle {
+        font-size: 1rem;
+
+        .subTitleEffect {
+          font-size: 1rem;
+          color: $blue500;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .main {
+      padding: 1.25rem;
+      border-radius: 1rem;
+      border: 1px solid $gray200;
+      background-color: $gray50;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      .mainTitle {
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding-left: 0.5rem;
+      }
+
+      .box {
+        display: flex;
+        gap: 2rem;
+        justify-content: space-around;
+
+        .imageBox {
+          position: relative;
+
+          .imageEffect {
+            position: absolute;
+            right: -30%;
+            top: -20%;
+          }
+        }
+
+        .text {
+          margin: 0.5rem 0 0.25rem;
+          font-size: 1.125rem;
+          font-weight: 500;
+
+          .textEffect {
+            font-weight: 700;
+          }
+        }
+
+        .subText {
+          font-size: 1rem;
+          color: $gray700;
+          font-weight: 500;
+        }
+      }
+
+      .guide {
+        font-size: 0.875rem;
+        color: $red500;
+        font-weight: 500;
+        line-height: 1.25rem;
+        padding-left: 0.25rem;
+      }
+    }
+  }
+
+  .footer {
+    margin: 0 auto;
+
+    .button {
+      width: 12rem;
+      height: 3rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      background-color: $blue500;
+      font-size: 1.0625rem;
+      color: $white;
+      font-weight: 700;
+    }
+  }
+}

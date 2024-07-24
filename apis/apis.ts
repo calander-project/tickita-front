@@ -183,3 +183,8 @@ export const participantScheduleCheck = async (
   const res = await instance.get(`/vote/participant?${participantIdQuery}&${selectedDatesQuery}`);
   return res.data;
 };
+
+export const createVote = async (data: VoteDataType) => {
+  const res = await instance.post("/vote", data);
+  return res.data;
+};

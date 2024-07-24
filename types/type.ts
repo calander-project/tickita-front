@@ -184,27 +184,27 @@ export interface DeleteScheduleResponseType {
 }
 
 export interface VoteDate {
-  voteDate: Date;
-  voteStartTime: Date;
-  voteEndTime: Date;
+  voteDate: string;
+  voteStartTime: string;
+  voteEndTime: string;
 }
 
 export interface VoteDataType {
-  crewId: number | null;
+  crewId: number;
   title: string;
   content: string;
   place: string;
   voteDateLists: VoteDate[];
-  endDate: Date | undefined;
-  endTime: Date | undefined;
+  endDate: string;
+  endTime: string;
   accountIds: number[];
 }
 
 export interface CoordinateScheduleDefaultInformationType {
   crewId: number;
   title: string;
-  content?: string;
-  place?: string;
+  content: string;
+  place: string;
   accountIds: number[];
 }
 
