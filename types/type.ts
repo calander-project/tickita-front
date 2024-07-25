@@ -218,8 +218,3 @@ export interface StepViewType {
   maxStep: number;
   currentStep: number;
 }
-
-export interface GroupLisType {
-  groupColor: GroupColorType;
-  title: string;
-}

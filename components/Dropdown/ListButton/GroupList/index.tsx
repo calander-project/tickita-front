@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 
-import { CreateGroupDataType, GroupLisType } from "@/types/type";
+import { CreateGroupDataType } from "@/types/type";
 
 import styles from "./GroupList.module.scss";
 
