@@ -103,7 +103,7 @@ export default function CalendarPage() {
 
   return (
     <>
-      <MetaData title="내 캘린더 | 티키타" />
+      <MetaData title="캘린더 | 티키타" />
       <Header />
       <div className={cn("container")}>
         <CalendarSideBar setSelectedCrewIdList={setSelectedCrewIdList} />

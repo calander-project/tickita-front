@@ -1,5 +1,3 @@
-import { promises } from "dns";
-
 import { InviteDataType } from "@/pages/group/[id]/components/InviteForm";
 
 import {
@@ -175,5 +173,18 @@ export const getScheduleDetail = async (scheduleId: number): Promise<ScheduleDet
 
 export const deleteSchedule = async (scheduleId: number): Promise<DeleteScheduleResponseType> => {
   const res = await instance.delete(`/schedule/${scheduleId}`);
+  return res.data;
+};
+
+export const participantScheduleCheck = async (
+  participantIdQuery: string,
+  selectedDatesQuery: string,
+) => {
+  const res = await instance.get(`/vote/participant?${participantIdQuery}&${selectedDatesQuery}`);
+  return res.data;
+};
+
+export const createVote = async (data: VoteDataType) => {
+  const res = await instance.post("/vote", data);
   return res.data;
 };

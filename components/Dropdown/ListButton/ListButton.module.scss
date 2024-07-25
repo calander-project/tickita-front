@@ -1,0 +1,22 @@
+.list {
+  border-top: 1px solid $gray500;
+
+  &:first-child {
+    border-top: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+
+  &:hover {
+    background-color: $gray200;
+    transition: 0.75s;
+  }
+
+  .button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+}

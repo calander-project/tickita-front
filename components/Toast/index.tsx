@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import classNames from "classnames/bind";
+import { createPortal } from "react-dom";
 
 import { ToastArrayType, ToastService } from "@/services/toastService";
 
@@ -24,8 +25,13 @@ interface ToastProps {
 }
 
 function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
+  const [isBrowser, setIsBrowser] = useState(false);
   const [messages, setMessages] = useState<IndividualToastType[]>([]);
   const id = useRef(0);
+
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
 
   useEffect(() => {
     if (messages.length > limit) {
@@ -80,17 +86,23 @@ function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
   };
 
   return (
-    <div className={cn("toast-box")}>
-      {messages.map((toast) => (
-        <ToastMessage
-          message={toast.message}
-          autoClose={autoClose}
-          type={toast.type}
-          key={toast.id}
-          onClose={() => handleFilterMessage(toast.id)}
-        />
-      ))}
-    </div>
+    <>
+      {isBrowser &&
+        createPortal(
+          <div className={cn("toast-box")}>
+            {messages.map((toast) => (
+              <ToastMessage
+                message={toast.message}
+                autoClose={autoClose}
+                type={toast.type}
+                key={toast.id}
+                onClose={() => handleFilterMessage(toast.id)}
+              />
+            ))}
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }
 

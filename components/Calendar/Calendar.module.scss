@@ -1,0 +1,53 @@
+.container {
+  background-color: $white;
+  border-radius: 0.5rem;
+  border: 1px solid $gray200;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  display: flex;
+  gap: 0.25rem;
+  flex-direction: column;
+  font-weight: 500;
+  width: 100%;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    .currentBox {
+      display: flex;
+      gap: 1rem;
+      position: relative;
+
+      &:first-of-type::after {
+        content: "l";
+        position: absolute;
+        left: 60%;
+        color: $gray600;
+      }
+    }
+  }
+
+  .calendar {
+    display: grid;
+    grid-template: repeat(6, 1fr) / repeat(7, 1fr);
+
+    .month {
+      font-size: 0.75rem;
+      padding: 0.5rem;
+      text-align: center;
+      color: $gray700;
+    }
+
+    .dateButton {
+      width: 100%;
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.75rem;
+
+      &:disabled {
+        color: $gray500;
+      }
+    }
+  }
+}

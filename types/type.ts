@@ -156,7 +156,7 @@ export type ToastType = "success" | "error" | "warning" | "info" | "pending";
 export interface CrewInfo {
   crewId: number;
   crewName: string;
-  labelColor: string;
+  labelColor: GroupColorType;
 }
 
 export interface Participant {
@@ -184,18 +184,37 @@ export interface DeleteScheduleResponseType {
 }
 
 export interface VoteDate {
-  voteDate: Date;
-  voteStartTime: Date;
-  voteEndTime: Date;
+  voteDate: string;
+  voteStartTime: string;
+  voteEndTime: string;
 }
 
 export interface VoteDataType {
-  crewId: number | null;
+  crewId: number;
   title: string;
   content: string;
   place: string;
   voteDateLists: VoteDate[];
-  endDate: Date | undefined;
-  endTime: Date | undefined;
+  endDate: string;
+  endTime: string;
   accountIds: number[];
+}
+
+export interface CoordinationScheduleDefaultInformationType {
+  crewId: number;
+  title: string;
+  content: string;
+  place: string;
+  accountIds: number[];
+}
+
+export interface CoordinationScheduleDtoType extends CoordinationScheduleDefaultInformationType {
+  voteDateLists: VoteDate[];
+  endTime: string;
+  endDate: string;
+}
+
+export interface StepViewType {
+  maxStep: number;
+  currentStep: number;
 }

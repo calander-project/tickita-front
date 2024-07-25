@@ -80,6 +80,7 @@ button {
   border: none;
   cursor: pointer;
   font-family: "Pretendard";
+  padding: 0;
 }
 
 input {
@@ -94,4 +95,9 @@ input {
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+li {
+  list-style-type: none;
+  marker: none;
 }

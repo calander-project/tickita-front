@@ -1,0 +1,125 @@
+.datePicker {
+  width: 100%;
+  height: 165px;
+
+  .header {
+    width: 100%;
+    overflow-x: auto;
+    position: relative;
+    overflow-x: auto; // 가로방향 스크롤
+    scroll-behavior: smooth; // 스크롤 부드럽게
+    scrollbar-width: none;
+
+    .box {
+      width: 105rem;
+      position: relative;
+
+      .button {
+        width: 4.25rem;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $white;
+        position: fixed;
+      }
+
+      .prev {
+        left: 1.5rem;
+      }
+
+      .next {
+        right: 1.5rem;
+      }
+
+      // 시간 영역
+      .hourList {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid $gray600;
+        padding: 0 4.25rem;
+
+        .hour {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 4.55rem;
+          height: 3rem;
+          color: $gray700;
+          font-size: 0.75rem;
+          font-weight: 500;
+          border-right: 1px solid $gray300;
+          user-select: none;
+
+          &:first-of-type {
+            border-left: 1px solid $gray300;
+          }
+        }
+      }
+    }
+
+    // 시간 선택 영역
+    .picker {
+      display: flex;
+      position: relative;
+      width: 105rem;
+      padding-left: 4.25rem;
+      border-bottom: 1px solid $gray600;
+
+      .date {
+        width: 4.5rem;
+        height: 6rem;
+        position: fixed;
+        left: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25rem;
+        border-top: 1px solid $gray300;
+        font-size: 0.7rem;
+        font-weight: 700;
+        background-color: $white;
+        user-select: none;
+      }
+
+      .hour {
+        display: flex;
+
+        .item {
+          width: 2.01rem;
+          height: 6rem;
+          border-left: 1px solid $gray300;
+          border-bottom: 1px solid $gray300;
+        }
+
+        .lastIdx {
+          border-right: 1px solid $gray600;
+        }
+
+        .dragItem {
+          background-color: $blue600;
+        }
+
+        .selectedItem {
+          background-color: $blue500;
+        }
+
+        .impossibleItem {
+          background-color: $gray700;
+        }
+      }
+
+      .gap {
+        position: fixed;
+        right: 1.5rem;
+        background-color: $white;
+        width: 4.25rem;
+        height: 6rem;
+        pointer-events: none;
+        user-select: none;
+        z-index: 999;
+      }
+    }
+  }
+}

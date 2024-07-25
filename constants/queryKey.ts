@@ -20,7 +20,7 @@ export const userInfoKey = {
 export const notificationKey = {
   all: ["notification"] as const,
   lists: () => [...notificationKey.all, "list"] as const,
-} as const;
+};
 
 export const scheduleKey = {
   all: ["schedule"] as const, // 전체 관리

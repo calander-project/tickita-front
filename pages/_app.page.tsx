@@ -1,3 +1,4 @@
+import "@/styles/reset.css";
 import { NextPage } from "next";
 import { ReactElement, ReactNode, useState } from "react";
 
@@ -11,8 +12,6 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary } from "react-error-boundary";
-
-import "@/styles/reset.css";
 
 import ErrorFallback from "@/components/ErrorFallBack";
 import Portal from "@/components/Modal/Portal";

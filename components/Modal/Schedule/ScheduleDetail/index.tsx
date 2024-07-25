@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames/bind";
 import dayjs from "dayjs";
 
-import { deleteSchedule, getScheduleDetail } from "@/apis/apis";
+import { getScheduleDetail } from "@/apis/apis";
 import { scheduleKey } from "@/constants/queryKey";
 import useDeleteSchedule from "@/hooks/useDeleteSchedule";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
@@ -18,7 +18,7 @@ const cn = classNames.bind(styles);
 export default function ScheduleDetailModal() {
   const { closeModal, data: scheduleId } = useModalStore();
   const { data: userInfo } = useGetUserInfo();
-  const { mutate } = useDeleteSchedule(scheduleId);
+  const { mutate } = useDeleteSchedule();
   const { successToast, errorToast } = useToast();
 
   const { data } = useQuery({

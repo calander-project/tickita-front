@@ -45,7 +45,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   }
 };
 
-export default function Group() {
+export default function GroupDetail() {
   const { query } = useRouter();
   const { data: groupInfo } = useGetGroupInfo(Number(query.id));
   const { data: userInfo } = useGetUserInfo();
@@ -76,6 +76,6 @@ export default function Group() {
   );
 }
 
-Group.getLayout = function getLayout(page: ReactElement) {
+GroupDetail.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };

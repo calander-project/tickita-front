@@ -43,6 +43,10 @@ export default function CalendarSideBar({ setSelectedCrewIdList }: CalendarSideB
     openModal(MODAL_TYPE.SCHEDULE_CREATE);
   };
 
+  const handleCoordinationModalOpen = () => {
+    openModal(MODAL_TYPE.SCHEDULE_COORDINATION);
+  };
+
   return (
     <aside className={cn("container")}>
       <div
@@ -57,7 +61,7 @@ export default function CalendarSideBar({ setSelectedCrewIdList }: CalendarSideB
         {isCreateListVisible && (
           <ul className={cn("create-list-container")}>
             <li onClick={handleCreateModalOpen}>일정 만들기</li>
-            <li>일정 조율하기</li>
+            <li onClick={handleCoordinationModalOpen}>일정 조율하기</li>
           </ul>
         )}
       </div>

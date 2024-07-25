@@ -1,0 +1,49 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .list {
+    width: 26.25rem;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-height: 5.5rem;
+    overflow-y: auto;
+
+    .item {
+      border: 1px solid $gray500;
+      width: 5.25rem;
+      height: 2.25rem;
+      line-height: 2.25rem;
+      padding: 0 0.25rem;
+      text-align: center;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      @include text-overflow-ellipsis(1);
+
+      &:not(.selected):hover {
+        background-color: $blue100;
+        transition: 0.75s;
+      }
+    }
+
+    .selected {
+      background-color: $blue500;
+      color: $white;
+    }
+
+    .empty {
+      color: $red500;
+      font-weight: 500;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      font-size: 0.875rem;
+      height: 1.25rem;
+      line-height: 1.25rem;
+    }
+  }
+}
