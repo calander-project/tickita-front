@@ -63,7 +63,7 @@ function Vote({ voteInfo, isCreator }: VoteProps) {
     <div className={cn("container")}>
       <div className={cn("box")}>
         <RemainTime remainTime={remainTime} endTime={endTime} endDate={endDate} />
-        {!isCreator ? (
+        {isCreator ? (
           <DeleteButton />
         ) : (
           <SubmitButton selectedDate={selectedDate} defaultSelectedDate={defaultSelectedDate} />
