@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import classNames from "classnames/bind";
 import dayjs from "dayjs";
@@ -19,7 +20,10 @@ export default function VoteNotification({ notification }: VoteNotificationProps
   const endDate = dayjs(notification.localDateTime).format("YY.MM.DD (ddd)");
 
   return (
-    <div className={cn("container", { isVoted: notification.voteParticipateType })}>
+    <Link
+      href={`vote/${notification.voteId}?crewId=${notification.crewId}`}
+      className={cn("container", { isVoted: notification.voteParticipateType })}
+    >
       <div className={cn("label-container")}>
         <div className={cn("left-labels")}>
           <div className={cn("group-label")}>{notification.crewName}</div>
@@ -34,6 +38,6 @@ export default function VoteNotification({ notification }: VoteNotificationProps
       </div>
       <p className={cn("vote-title")}>{notification.voteTitle}</p>
       <div className={cn("end-date")}>{endDate}</div>
-    </div>
+    </Link>
   );
 }

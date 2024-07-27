@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  height: calc(100vh - 5rem - 1px);
+  background-color: $gray100;
+
+  .box {
+    width: 81.25rem;
+    margin: 0 auto;
+    display: flex;
+    gap: 1.25rem;
+    padding-top: 6rem;
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+  }
+}
