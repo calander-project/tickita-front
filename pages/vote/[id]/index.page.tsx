@@ -21,7 +21,6 @@ const cn = classNames.bind(styles);
 
 export interface VotePageProps {
   voteInfo: VoteInfoType;
-  userInfo: UserInfoType;
   isCreator: boolean;
 }
 
@@ -44,7 +43,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     const isCreator = voteInfo.creatorId === userInfo.accountId;
 
     return {
-      props: { dehydrateState: dehydrate(queryClient), voteInfo, userInfo, isCreator },
+      props: { dehydrateState: dehydrate(queryClient), voteInfo, isCreator },
     };
   } catch (error) {
     return {
@@ -53,7 +52,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   }
 };
 
-function VotePage({ voteInfo, userInfo, isCreator }: VotePageProps) {
+function VotePage({ voteInfo, isCreator }: VotePageProps) {
   return (
     <>
       <MetaData title={`${voteInfo.title} 투표 페이지 | 티키타`} />
