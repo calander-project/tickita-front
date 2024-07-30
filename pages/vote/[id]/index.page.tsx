@@ -42,9 +42,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     const voteInfo = queryClient.getQueryData(voteKey.detail(voteId)) as VoteInfoType;
     const userInfo = queryClient.getQueryData(userInfoKey.info()) as UserInfoType;
     const isCreator = voteInfo.creatorId === userInfo.accountId;
-    const isVote = voteInfo.voteListResponses.find(
-      (vote) => vote.accountId === userInfo.accountId,
-    )?.voteParticipateType;
+    const isVote =
+      voteInfo.voteListResponses.find((vote) => vote.accountId === userInfo.accountId)
+        ?.voteParticipateType ?? false;
 
     return {
       props: { dehydrateState: dehydrate(queryClient), voteInfo, isCreator, isVote },
