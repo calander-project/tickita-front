@@ -192,6 +192,6 @@ export const getVoteInfo = async (crewId: string, voteSubjectId: string): Promis
 };
 
 export const submitVote = async (voteId: string, data: VotePayloadType) => {
-  const res = await instance.post(`/vote/${voteId}}`, data);
+  const res = await instance.post(`/vote/${voteId}`, data);
   return res.data;
 };

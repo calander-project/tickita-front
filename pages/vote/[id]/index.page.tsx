@@ -22,6 +22,7 @@ const cn = classNames.bind(styles);
 export interface VotePageProps {
   voteInfo: VoteInfoType;
   isCreator: boolean;
+  isVote: boolean; // 투표 여부
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -41,9 +42,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     const voteInfo = queryClient.getQueryData(voteKey.detail(voteId)) as VoteInfoType;
     const userInfo = queryClient.getQueryData(userInfoKey.info()) as UserInfoType;
     const isCreator = voteInfo.creatorId === userInfo.accountId;
+    const isVote = voteInfo.voteListResponses.find(
+      (vote) => vote.accountId === userInfo.accountId,
+    )?.voteParticipateType;
 
     return {
-      props: { dehydrateState: dehydrate(queryClient), voteInfo, isCreator },
+      props: { dehydrateState: dehydrate(queryClient), voteInfo, isCreator, isVote },
     };
   } catch (error) {
     return {
@@ -52,7 +56,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   }
 };
 
-function VotePage({ voteInfo, isCreator }: VotePageProps) {
+function VotePage({ voteInfo, isCreator, isVote }: VotePageProps) {
   return (
     <>
       <MetaData title={`${voteInfo.title} 투표 페이지 | 티키타`} />
@@ -65,7 +69,7 @@ function VotePage({ voteInfo, isCreator }: VotePageProps) {
           </section>
           <section className={cn("section")}>
             <Participant participantList={voteInfo.voteListResponses} />
-            <Vote voteInfo={voteInfo} isCreator={isCreator} />
+            <Vote voteInfo={voteInfo} isCreator={isCreator} isVote={isVote} />
           </section>
         </div>
       </main>

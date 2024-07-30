@@ -42,8 +42,6 @@ export default function MyPage({ voteNotifications }: MyPageProps) {
     return null;
   }
 
-  console.log(voteNotifications);
-
   return (
     <>
       <MetaData title="마이페이지 | 티키타" />

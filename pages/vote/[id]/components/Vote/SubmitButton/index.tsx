@@ -15,9 +15,10 @@ const cn = classNames.bind(styles);
 interface SubmitButtonProps {
   selectedDate: SelectedDateType;
   defaultSelectedDate: RefObject<SelectedDateType | null>;
+  isVote: boolean;
 }
 
-function SubmitButton({ selectedDate, defaultSelectedDate }: SubmitButtonProps) {
+function SubmitButton({ selectedDate, defaultSelectedDate, isVote }: SubmitButtonProps) {
   const [isDirty, setIsDirty] = useState(false);
   const { openModal } = useModalStore();
 
@@ -59,11 +60,11 @@ function SubmitButton({ selectedDate, defaultSelectedDate }: SubmitButtonProps) 
     <button
       type="button"
       className={cn("button")}
-      disabled={!isDirty}
+      disabled={!isDirty || isVote}
       onClick={handleSubmitButtonClick}
     >
       <Image src="/icons/vote-box.svg" width={12} height={12} alt="투표 상자 아이콘" />
-      투표 제출하기
+      {isVote ? "투표 완료" : "투표 제출하기"}
     </button>
   );
 }

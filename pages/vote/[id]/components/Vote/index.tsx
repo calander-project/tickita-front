@@ -22,9 +22,10 @@ export interface SelectedDateType {
 interface VoteProps {
   voteInfo: VoteInfoType;
   isCreator: boolean;
+  isVote: boolean;
 }
 
-function Vote({ voteInfo, isCreator }: VoteProps) {
+function Vote({ voteInfo, isCreator, isVote }: VoteProps) {
   const { voteListResponses, remainTime, endDate, endTime, voteDateListResponses } = voteInfo;
 
   const [selectedDate, setSelectedDate] = useState<SelectedDateType>(() => {
@@ -66,7 +67,11 @@ function Vote({ voteInfo, isCreator }: VoteProps) {
         {isCreator ? (
           <DeleteButton />
         ) : (
-          <SubmitButton selectedDate={selectedDate} defaultSelectedDate={defaultSelectedDate} />
+          <SubmitButton
+            selectedDate={selectedDate}
+            defaultSelectedDate={defaultSelectedDate}
+            isVote={isVote}
+          />
         )}
       </div>
       <ul className={cn("listBox")}>
