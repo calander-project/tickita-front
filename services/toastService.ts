@@ -3,7 +3,6 @@ import { ToastType } from "@/types/type";
 type ToastObserver = (array: ToastArrayType) => void;
 
 export interface ToastArrayType {
-  id: string;
   type: ToastType;
   message: string;
 }
@@ -43,26 +42,20 @@ export class ToastService {
     this.observers.forEach((observer) => observer(this.messages[this.messages.length - 1]));
   }
 
-  notifyUpdater(updateToast: ToastArrayType) {
+  notifyUpdater() {
     // 모든 옵저버에게 가장 최근 메세지 전달
-    this.updaters.forEach((observer) => observer(updateToast));
+    this.updaters.forEach((test) => test(this.messages[this.messages.length - 1]));
   }
 
-  addToast(id: string, type: ToastType, message: string) {
+  addToast(type: ToastType, message: string) {
     // 메세지 추가
-    this.messages.push({ id, type, message });
+    this.messages.push({ type, message });
     this.notifyObserver();
   }
 
-  updateToast(id: string, type: ToastType, message: string) {
-    const findToast = this.messages.find((toast) => toast.id === id);
-
-    if (!findToast) {
-      return;
-    }
-
-    findToast.type = type;
-    findToast.message = message;
-    this.notifyUpdater(findToast);
+  updateToastType(type: ToastType, message: string) {
+    // 메세지 업데이트
+    this.messages[this.messages.length - 1] = { type, message };
+    this.notifyUpdater();
   }
 }

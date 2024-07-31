@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import classNames from "classnames/bind";
 
 import { useSubmitVote } from "@/hooks/useSubmitVote";
+import useToast from "@/hooks/useToast";
 import { useModalStore } from "@/store/useModalStore";
 
 import styles from "./SubmitVote.module.scss";
@@ -19,6 +20,7 @@ interface SelectedDateType {
 export default function SubmitVoteModal() {
   const { closeModal, data } = useModalStore();
   const { query } = useRouter();
+  const { successToast, errorToast, pendingToast } = useToast();
   const { mutate } = useSubmitVote(query.id as string);
 
   const handleSubmitButtonClick = () => {
@@ -27,9 +29,15 @@ export default function SubmitVoteModal() {
       voteStateIds: data.map((item: SelectedDateType) => item.key),
     };
 
+    pendingToast("투표를 제출하고 있습니다...");
+
     mutate(payload, {
       onSuccess: () => {
+        successToast("조율 일정 투표가 제출되었습니다.");
         closeModal();
+      },
+      onError: () => {
+        errorToast("투표를 제출 하던 중 에러가 발생했습니다!");
       },
     });
   };

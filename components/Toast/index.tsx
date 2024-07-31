@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import classNames from "classnames/bind";
 
@@ -12,7 +12,7 @@ import ToastMessage from "./ToastMessage";
 const cn = classNames.bind(styles);
 
 export interface IndividualToastType {
-  id: string;
+  id: number;
   type: ToastType;
   message: string;
 }
@@ -23,15 +23,21 @@ interface ToastProps {
 }
 
 function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
+  const [isBrowser, setIsBrowser] = useState(false);
   const [messages, setMessages] = useState<IndividualToastType[]>([]);
+  const id = useRef(0);
 
   useEffect(() => {
-    const handleNewMessage = ({ id, type, message }: ToastArrayType) => {
-      if (messages.length >= limit) {
-        return;
-      }
+    setIsBrowser(true);
+  }, []);
 
-      setMessages((prev) => [...prev, { id, type, message }]);
+  useEffect(() => {
+    if (messages.length > limit) {
+      return;
+    }
+
+    const handleNewMessage = ({ type, message }: ToastArrayType) => {
+      setMessages((prev) => [...prev, { id: id.current++, type, message }]);
 
       if (type === "pending") {
         return;
@@ -39,19 +45,20 @@ function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
 
       // 메시지를 일정 시간 후에 제거
       setTimeout(() => {
-        setMessages((prev) => prev.filter((toast) => toast.id !== id));
+        setMessages((prev) => prev.slice(1));
       }, autoClose);
     };
 
-    const handleUpdateToast = ({ id, type, message }: ToastArrayType) => {
+    const handleLatestMessageChange = ({ type, message }: ToastArrayType) => {
       setMessages((prev) => {
-        const updatedMessages = prev.map((toast) => {
-          if (toast.id === id) {
-            return { ...toast, type, message };
-          }
-          return toast;
-        });
-        return updatedMessages;
+        const latestMessage = prev[prev.length - 1];
+
+        if (latestMessage) {
+          latestMessage.type = type;
+          latestMessage.message = message;
+        }
+
+        return [...prev];
       });
 
       if (type === "pending") {
@@ -59,20 +66,20 @@ function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
       }
 
       setTimeout(() => {
-        setMessages((prev) => prev.filter((toast) => toast.id !== id));
+        setMessages((prev) => prev.slice(1));
       }, autoClose);
     };
 
     const toastService = ToastService.getInstance();
 
-    toastService.subscribe(handleNewMessage, handleUpdateToast);
+    toastService.subscribe(handleNewMessage, handleLatestMessageChange);
 
     return () => {
-      toastService.unsubscribe(handleNewMessage, handleUpdateToast);
+      toastService.unsubscribe(handleNewMessage, handleLatestMessageChange);
     };
   }, [messages.length]);
 
-  const handleDeleteMessage = (id: string) => {
+  const handleDeleteMessage = (id: number) => {
     setMessages((prev) => prev.filter((message) => message.id !== id));
   };
 
