@@ -60,7 +60,7 @@ function SubmitButton({ selectedDate, defaultSelectedDate, isVote }: SubmitButto
     <button
       type="button"
       className={cn("button")}
-      disabled={!isDirty || isVote}
+      disabled={!isDirty || !isVote}
       onClick={handleSubmitButtonClick}
     >
       <Image src="/icons/vote-box.svg" width={12} height={12} alt="투표 상자 아이콘" />

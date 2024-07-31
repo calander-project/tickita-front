@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import classNames from "classnames/bind";
-import { createPortal } from "react-dom";
 
 import { ToastArrayType, ToastService } from "@/services/toastService";
 
@@ -13,8 +12,7 @@ import ToastMessage from "./ToastMessage";
 const cn = classNames.bind(styles);
 
 export interface IndividualToastType {
-  // 개별 토스트 타입
-  id: number;
+  id: string;
   type: ToastType;
   message: string;
 }
@@ -25,21 +23,15 @@ interface ToastProps {
 }
 
 function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
-  const [isBrowser, setIsBrowser] = useState(false);
   const [messages, setMessages] = useState<IndividualToastType[]>([]);
-  const id = useRef(0);
 
   useEffect(() => {
-    setIsBrowser(true);
-  }, []);
+    const handleNewMessage = ({ id, type, message }: ToastArrayType) => {
+      if (messages.length >= limit) {
+        return;
+      }
 
-  useEffect(() => {
-    if (messages.length > limit) {
-      return;
-    }
-
-    const handleNewMessage = ({ type, message }: ToastArrayType) => {
-      setMessages((prev) => [...prev, { id: id.current++, type, message }]);
+      setMessages((prev) => [...prev, { id, type, message }]);
 
       if (type === "pending") {
         return;
@@ -47,20 +39,19 @@ function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
 
       // 메시지를 일정 시간 후에 제거
       setTimeout(() => {
-        setMessages((prev) => prev.slice(1));
+        setMessages((prev) => prev.filter((toast) => toast.id !== id));
       }, autoClose);
     };
 
-    const handleLastestMessageChande = ({ type, message }: ToastArrayType) => {
+    const handleUpdateToast = ({ id, type, message }: ToastArrayType) => {
       setMessages((prev) => {
-        const lastestMessage = prev[prev.length - 1];
-
-        if (lastestMessage) {
-          lastestMessage.type = type;
-          lastestMessage.message = message;
-        }
-
-        return [...prev];
+        const updatedMessages = prev.map((toast) => {
+          if (toast.id === id) {
+            return { ...toast, type, message };
+          }
+          return toast;
+        });
+        return updatedMessages;
       });
 
       if (type === "pending") {
@@ -68,41 +59,35 @@ function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
       }
 
       setTimeout(() => {
-        setMessages((prev) => prev.slice(1));
+        setMessages((prev) => prev.filter((toast) => toast.id !== id));
       }, autoClose);
     };
 
     const toastService = ToastService.getInstance();
 
-    toastService.subscribe(handleNewMessage, handleLastestMessageChande);
+    toastService.subscribe(handleNewMessage, handleUpdateToast);
 
     return () => {
-      toastService.unsubscribe(handleNewMessage, handleLastestMessageChande);
+      toastService.unsubscribe(handleNewMessage, handleUpdateToast);
     };
   }, [messages.length]);
 
-  const handleFilterMessage = (id: number) => {
+  const handleDeleteMessage = (id: string) => {
     setMessages((prev) => prev.filter((message) => message.id !== id));
   };
 
   return (
-    <>
-      {isBrowser &&
-        createPortal(
-          <div className={cn("toast-box")}>
-            {messages.map((toast) => (
-              <ToastMessage
-                message={toast.message}
-                autoClose={autoClose}
-                type={toast.type}
-                key={toast.id}
-                onClose={() => handleFilterMessage(toast.id)}
-              />
-            ))}
-          </div>,
-          document.body,
-        )}
-    </>
+    <div className={cn("toast-box")}>
+      {messages.map((toast) => (
+        <ToastMessage
+          message={toast.message}
+          autoClose={autoClose}
+          type={toast.type}
+          key={toast.id}
+          onClose={() => handleDeleteMessage(toast.id)}
+        />
+      ))}
+    </div>
   );
 }
 
