@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import classNames from "classnames/bind";
-import { createPortal } from "react-dom";
 
 import { ToastArrayType, ToastService } from "@/services/toastService";
 
@@ -13,7 +12,6 @@ import ToastMessage from "./ToastMessage";
 const cn = classNames.bind(styles);
 
 export interface IndividualToastType {
-  // 개별 토스트 타입
   id: number;
   type: ToastType;
   message: string;
@@ -51,13 +49,13 @@ function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
       }, autoClose);
     };
 
-    const handleLastestMessageChande = ({ type, message }: ToastArrayType) => {
+    const handleLatestMessageChange = ({ type, message }: ToastArrayType) => {
       setMessages((prev) => {
-        const lastestMessage = prev[prev.length - 1];
+        const latestMessage = prev[prev.length - 1];
 
-        if (lastestMessage) {
-          lastestMessage.type = type;
-          lastestMessage.message = message;
+        if (latestMessage) {
+          latestMessage.type = type;
+          latestMessage.message = message;
         }
 
         return [...prev];
@@ -74,35 +72,29 @@ function Toast({ limit = 3, autoClose = 3000 }: ToastProps) {
 
     const toastService = ToastService.getInstance();
 
-    toastService.subscribe(handleNewMessage, handleLastestMessageChande);
+    toastService.subscribe(handleNewMessage, handleLatestMessageChange);
 
     return () => {
-      toastService.unsubscribe(handleNewMessage, handleLastestMessageChande);
+      toastService.unsubscribe(handleNewMessage, handleLatestMessageChange);
     };
   }, [messages.length]);
 
-  const handleFilterMessage = (id: number) => {
+  const handleDeleteMessage = (id: number) => {
     setMessages((prev) => prev.filter((message) => message.id !== id));
   };
 
   return (
-    <>
-      {isBrowser &&
-        createPortal(
-          <div className={cn("toast-box")}>
-            {messages.map((toast) => (
-              <ToastMessage
-                message={toast.message}
-                autoClose={autoClose}
-                type={toast.type}
-                key={toast.id}
-                onClose={() => handleFilterMessage(toast.id)}
-              />
-            ))}
-          </div>,
-          document.body,
-        )}
-    </>
+    <div className={cn("toast-box")}>
+      {messages.map((toast) => (
+        <ToastMessage
+          message={toast.message}
+          autoClose={autoClose}
+          type={toast.type}
+          key={toast.id}
+          onClose={() => handleDeleteMessage(toast.id)}
+        />
+      ))}
+    </div>
   );
 }
 

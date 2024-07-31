@@ -1,0 +1,23 @@
+.button {
+  width: 100%;
+  height: 4.6875rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: $blue500;
+  font-size: 1.375rem;
+  color: $white;
+  font-weight: 700;
+
+  &:hover {
+    background-color: $blue600;
+    transition: 0.75s;
+  }
+
+  &:disabled {
+    background-color: $gray300;
+    color: $gray600;
+  }
+}

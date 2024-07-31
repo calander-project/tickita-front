@@ -31,3 +31,10 @@ export const scheduleKey = {
   details: () => [...scheduleKey.all, "detail"] as const, // 일정 상세 -> 기본 키 제공, 유지보수 용이
   detail: (scheduleId: number) => [...scheduleKey.details(), scheduleId] as const, // 일정 상세(특정 일정)
 };
+
+export const voteKey = {
+  all: ["vote"] as const,
+  lists: () => [...voteKey.all, "list"] as const,
+  details: () => [...voteKey.all, "detail"] as const,
+  detail: (voteId: string) => [...voteKey.details(), voteId] as const,
+};

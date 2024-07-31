@@ -218,3 +218,36 @@ export interface StepViewType {
   maxStep: number;
   currentStep: number;
 }
+
+export interface ParticipantListType {
+  accountId: number;
+  nickName: string;
+  voteParticipateType: boolean;
+}
+
+export interface VoteInfoType {
+  title: string;
+  content: string;
+  place: string;
+  crewId: number;
+  crewName: string;
+  crewLabelColor: GroupColorType;
+  creatorId: number;
+  creatorNickName: string;
+  voteListResponses: ParticipantListType[];
+  endDate: string;
+  endTime: string;
+  voteDateListResponses: {
+    voteStateId: number;
+    voteDate: string;
+    voteStartTime: string;
+    voteEndTime: string;
+    voteCount: number;
+  }[];
+  remainTime: number;
+}
+
+export interface VotePayloadType {
+  crewId: number;
+  voteStateIds: number[];
+}

@@ -1,10 +1,12 @@
 import dayjs, { Dayjs } from "dayjs";
+import duration from "dayjs/plugin/duration";
 import isBetween from "dayjs/plugin/isBetween";
 
 import { participantTimesType } from "@/components/Modal/CoordinationSchedule";
 import { VoteDateListType } from "@/components/Modal/CoordinationSchedule/Components/SelectDate";
 
 dayjs.extend(isBetween);
+dayjs.extend(duration);
 
 /**
  * 월간 캘린더에 들어갈 날짜를 42일 기준으로 계산
@@ -126,4 +128,16 @@ export const isImpossibleTimeInRange = (
   }
 
   return false;
+};
+
+export const formatDurationTime = (second: number) => {
+  const duration = dayjs.duration(second, "seconds");
+  const day = duration.days();
+  const hour = duration.hours();
+
+  if (day > 0) {
+    return `${day}일`;
+  }
+
+  return `${hour}시간`;
 };

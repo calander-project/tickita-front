@@ -53,7 +53,6 @@ export class ToastService {
     this.notifyObserver();
   }
 
-  // 가장 마지막 메세지를 변경
   updateToastType(type: ToastType, message: string) {
     // 메세지 업데이트
     this.messages[this.messages.length - 1] = { type, message };

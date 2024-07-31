@@ -32,7 +32,7 @@ function Calendar({ selectedDate, setSelectedDate }: CalendarProps) {
 
   const handleSelectDate = (day: number) => {
     setSelectedDate((prev) =>
-      [...prev, `${dayjs(currentDate).format("YYYY-MM")}-${day}`].sort(
+      [...prev, `${dayjs(currentDate).format("YYYY-MM")}-${String(day).padStart(2, "0")}`].sort(
         (a, b) => new Date(a).getTime() - new Date(b).getTime(),
       ),
     );

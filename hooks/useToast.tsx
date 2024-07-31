@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import { ToastService } from "@/services/toastService";
 
 const useToast = () => {

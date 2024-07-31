@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 
 import classNames from "classnames/bind";
+import dayjs from "dayjs";
 
 import Calendar from "@/components/Calendar";
 
